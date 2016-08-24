@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if java -jar antlr-3.2.jar Bali.g; then
+    javac -cp antlr-3.2.jar Bali*.java
+#    rm -f Bali*.java Bali*.class Bali.tokens
+fi
