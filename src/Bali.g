@@ -4,12 +4,12 @@ grammar Bali;
 
 tokens
 {
+    ATTR    = '=' ;
     PLUS    = '+' ;
     MINUS   = '-' ;
     TIMES   = '*' ;
     OVER    = '/' ;
     REM     = '%' ;
-    SEMI    = ';' ;
     OPEN_P  = '(' ;
     CLOSE_P = ')' ;
     PRINT   = 'print' ;
@@ -25,6 +25,7 @@ tokens
 @members
 {
     //private static ArrayList<String> symbol_table;
+    public static int stack = 0, max_stack = 0;
 
     public static void main(String[] args) throws Exception
     {
@@ -37,13 +38,21 @@ tokens
         parser.program();
         //System.out.println("symbols: " + symbol_table);
     }
+
+    public static void emit(String bytecode, int delta){
+        System.out.println(bytecode);
+        stack += delta;
+        if(stack > max_stack)
+            max_stack = stack;
+    }
 }
 
 /*---------------- LEXER RULES ----------------*/
 
 NUM     : '0'..'9'+('.' '0'..'9'+)? ;
-SPACE   : (' '|'\t'|'\r'|'\n')+ { skip(); } ;
-
+SPACE   : (' '|'\t')+ { skip(); } ;
+VAR     : 'a'..'z'+ ;
+NL      : ('\r')?'\n';
 
 /*---------------- PARSER RULES ----------------*/
 
@@ -62,48 +71,50 @@ program
         }
         (statement)+
         { System.out.println(
-            "\t; finaliza o metodo\n"+
             "\treturn\n\n"+
-    
-        "; indica que no maximo tres itens podem ser colocados na pilha\n"+
-        ".limit stack 10\n"+
+        ".limit stack " + max_stack +"\n"+
         ".end method\n"); 
         }
     ;
 
 statement
-    : st_print
+    : NL | st_attr | st_print
+    ;
+
+st_attr
+    : VAR ATTR exp_arithmetic NL
     ;
 
 st_print
     : 
     PRINT
-    { System.out.println("\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n"); } 
+    { emit("\tgetstatic java/lang/System/out Ljava/io/PrintStream;", 1); } 
     exp_arithmetic
-    { System.out.println("\tinvokevirtual java/io/PrintStream/println(I)V\n\n"); }
-    SEMI
+    { emit("\tinvokevirtual java/io/PrintStream/println(I)V\n", -2); }
+    NL
     ;
 
 exp_arithmetic
     : term ( op = ( PLUS | MINUS ) term 
-      { System.out.println(($op.type == PLUS) ? "\t\tiadd":"\t\tisubt"); })*
+      { emit(($op.type == PLUS) ? "\t\tiadd":"\t\tisubt", -1); })*
     ;
 
 term    
     : factor ( op = ( TIMES | OVER | REM) factor {
       
       if($op.type == TIMES)
-        System.out.println("\t\timul"); 
+        emit("\t\timul", -1); 
       else if($op.type == OVER)
-        System.out.println("\t\tidiv");
+        emit("\t\tidiv", -1);
       else
-        System.out.println("\t\tirem"); 
+        emit("\t\tirem", -1); 
     } )*
     ;
     
 factor
     :   NUM
-        { System.out.println("\t\tldc " + $NUM.text); }
+        { emit("\t\tldc " + $NUM.text, 1); }
     |	OPEN_P exp_arithmetic CLOSE_P
+    |   VAR
     ;
 
