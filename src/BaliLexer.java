@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 Bali.g 2016-08-31 17:44:29
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 Bali.g 2016-09-14 17:43:37
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -220,10 +220,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = NUM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:52:9: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
-            // Bali.g:52:11: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
+            // Bali.g:68:9: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
+            // Bali.g:68:11: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
             {
-            // Bali.g:52:11: ( '0' .. '9' )+
+            // Bali.g:68:11: ( '0' .. '9' )+
             int cnt1=0;
             loop1:
             do {
@@ -237,7 +237,7 @@ public class BaliLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // Bali.g:52:11: '0' .. '9'
+            	    // Bali.g:68:11: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -253,7 +253,7 @@ public class BaliLexer extends Lexer {
                 cnt1++;
             } while (true);
 
-            // Bali.g:52:20: ( '.' ( '0' .. '9' )+ )?
+            // Bali.g:68:20: ( '.' ( '0' .. '9' )+ )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -262,10 +262,10 @@ public class BaliLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // Bali.g:52:21: '.' ( '0' .. '9' )+
+                    // Bali.g:68:21: '.' ( '0' .. '9' )+
                     {
                     match('.'); 
-                    // Bali.g:52:25: ( '0' .. '9' )+
+                    // Bali.g:68:25: ( '0' .. '9' )+
                     int cnt2=0;
                     loop2:
                     do {
@@ -279,7 +279,7 @@ public class BaliLexer extends Lexer {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // Bali.g:52:25: '0' .. '9'
+                    	    // Bali.g:68:25: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -317,10 +317,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = SPACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:53:9: ( ( ' ' | '\\t' )+ )
-            // Bali.g:53:11: ( ' ' | '\\t' )+
+            // Bali.g:69:9: ( ( ' ' | '\\t' )+ )
+            // Bali.g:69:11: ( ' ' | '\\t' )+
             {
-            // Bali.g:53:11: ( ' ' | '\\t' )+
+            // Bali.g:69:11: ( ' ' | '\\t' )+
             int cnt4=0;
             loop4:
             do {
@@ -375,10 +375,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = VAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:54:9: ( ( 'a' .. 'z' )+ )
-            // Bali.g:54:11: ( 'a' .. 'z' )+
+            // Bali.g:70:9: ( ( 'a' .. 'z' )+ )
+            // Bali.g:70:11: ( 'a' .. 'z' )+
             {
-            // Bali.g:54:11: ( 'a' .. 'z' )+
+            // Bali.g:70:11: ( 'a' .. 'z' )+
             int cnt5=0;
             loop5:
             do {
@@ -392,7 +392,7 @@ public class BaliLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // Bali.g:54:11: 'a' .. 'z'
+            	    // Bali.g:70:11: 'a' .. 'z'
             	    {
             	    matchRange('a','z'); 
 
@@ -424,10 +424,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = NL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:55:9: ( ( '\\r' )? '\\n' )
-            // Bali.g:55:11: ( '\\r' )? '\\n'
+            // Bali.g:71:9: ( ( '\\r' )? '\\n' )
+            // Bali.g:71:11: ( '\\r' )? '\\n'
             {
-            // Bali.g:55:11: ( '\\r' )?
+            // Bali.g:71:11: ( '\\r' )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -436,7 +436,7 @@ public class BaliLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // Bali.g:55:12: '\\r'
+                    // Bali.g:71:12: '\\r'
                     {
                     match('\r'); 
 

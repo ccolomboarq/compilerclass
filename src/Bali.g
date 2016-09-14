@@ -19,12 +19,13 @@ tokens
 
 @header
 {
-    //import java.util.ArrayList;
+    import java.util.ArrayList;
 }
 
 @members
 {
-    //private static ArrayList<String> symbol_table;
+    private static ArrayList<String> symbol_table;
+
     public static int stack = 0, max_stack = 0;
 
     public static void main(String[] args) throws Exception
@@ -34,9 +35,10 @@ tokens
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         BaliParser parser = new BaliParser(tokens);
 
-        //symbol_table = new ArrayList<String>();        
+        symbol_table = new ArrayList<String>();
+        symbol_table.add("args");       
         parser.program();
-        //System.out.println("symbols: " + symbol_table);
+        System.out.println("; symbols: " + symbol_table);
     }
 
     public static void emit(String bytecode, int delta){
@@ -44,6 +46,20 @@ tokens
         stack += delta;
         if(stack > max_stack)
             max_stack = stack;
+    }
+
+    public static int createVariable(String symbol) {
+        if(!symbol_table.contains(symbol))
+            symbol_table.add(symbol);
+        return symbol_table.indexOf(symbol);
+    }
+
+    public static int findVariable(String symbol) {
+        if(!symbol_table.contains(symbol)) {
+           System.err.println("Variable " + symbol + " not declared");
+           System.exit(3);
+        }
+        return symbol_table.indexOf(symbol);
     }
 }
 
@@ -73,6 +89,7 @@ program
         { System.out.println(
             "\treturn\n\n"+
         ".limit stack " + max_stack +"\n"+
+        ".limit locals " + symbol_table.size() + "\n"+
         ".end method\n"); 
         }
     ;
@@ -83,6 +100,9 @@ statement
 
 st_attr
     : VAR ATTR exp_arithmetic NL
+    {
+        emit("\t\tistore " + createVariable($VAR.text), -1);
+    }
     ;
 
 st_print
@@ -115,6 +135,8 @@ factor
     :   NUM
         { emit("\t\tldc " + $NUM.text, 1); }
     |	OPEN_P exp_arithmetic CLOSE_P
-    |   VAR
+    |   VAR { 
+            emit("\t\tiload " + findVariable($VAR.text), +1);
+        }
     ;
 
