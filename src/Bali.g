@@ -13,6 +13,8 @@ tokens
     OPEN_P  = '(' ;
     CLOSE_P = ')' ;
     PRINT   = 'print' ;
+    READINT = 'read_int' ;
+    READSTR = 'read_str' ;
 }
 
 /*---------------- COMPILER INTERNALS ----------------*/
@@ -69,6 +71,7 @@ NUM     : '0'..'9'+('.' '0'..'9'+)? ;
 SPACE   : (' '|'\t')+ { skip(); } ;
 VAR     : 'a'..'z'+ ;
 NL      : ('\r')?'\n';
+STR     : '"'~('"')*'"';
 
 /*---------------- PARSER RULES ----------------*/
 
@@ -131,12 +134,23 @@ term
     } )*
     ;
     
-factor
-    :   NUM
-        { emit("\t\tldc " + $NUM.text, 1); }
+factor return [char type]
+    :   NUM { 
+            emit("\t\tldc " + $NUM.text, 1);
+            $type = 'i';
+        }
     |	OPEN_P exp_arithmetic CLOSE_P
     |   VAR { 
-            emit("\t\tiload " + findVariable($VAR.text), +1);
+            emit("\t\tiload " + findVariable($VAR.text), 1);
+        }
+    |   READINT {
+            emit("\tinvokestatic Runtime/readInt()I ;", 1);
+        }
+    |   READSTR {
+            emit("\tinvokestatic Runtime/readString()Ljava/lang/String;", 1);
+        }
+    |   STR {
+            emit("\t\taload " + findVariable($STR.text), 1);
         }
     ;
 

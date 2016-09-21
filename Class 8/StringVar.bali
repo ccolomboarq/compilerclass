@@ -1,0 +1,5 @@
+a = "abc"
+print a
+b = read_string
+print b
+
