@@ -26,7 +26,7 @@ if javac -cp antlr-3.2.jar *.java; then
 		echo ""
 		echo "#################### Running $FILENAME ####################"
 		echo ""
-		if java -jar jasmin-2.4.jar $FILENAME > /dev/null 2>&1; then
+		if java -jar jasmin-2.4.jar $FILENAME; then
 			javac Runtime.java
 			java Test
 		else

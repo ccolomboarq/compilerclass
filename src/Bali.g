@@ -28,6 +28,7 @@ tokens
 {
     private static ArrayList<String> symbol_table;
     private static ArrayList<Character> type_table;
+    private static ArrayList<Boolean> used_table;
     
     public static int stack = 0, max_stack = 0;
 
@@ -43,6 +44,9 @@ tokens
 
         type_table = new ArrayList<Character>();
         type_table.add('S');
+
+        used_table = new ArrayList<Boolean>();
+        used_table.add(true);
         parser.program();
         System.out.println("; symbols: " + symbol_table);
     }
@@ -58,6 +62,7 @@ tokens
         if(!symbol_table.contains(symbol)) {
             symbol_table.add(symbol);
             type_table.add(type);
+            used_table.add(false);
         }
         return symbol_table.indexOf(symbol);
     }
@@ -67,6 +72,7 @@ tokens
            System.err.println("Variable " + symbol + " not declared");
            System.exit(3);
         }
+        used_table.set(symbol_table.indexOf(symbol), true);
         return symbol_table.indexOf(symbol);
     }
 }
@@ -74,10 +80,11 @@ tokens
 /*---------------- LEXER RULES ----------------*/
 
 NUM     : '0'..'9'+('.' '0'..'9'+)? ;
-SPACE   : (' '|'\t')+ { skip(); } ;
 STR     : '"'~('"')*'"';
 VAR     : 'a'..'z'+ ;
+COMMENT : '#' ~('\n')* { skip(); };
 NL      : ('\r')?'\n';
+SPACE   : (' '|'\t')+ { skip(); } ;
 
 
 /*---------------- PARSER RULES ----------------*/
@@ -100,7 +107,11 @@ program
             "\treturn\n\n"+
         ".limit stack " + max_stack +"\n"+
         ".limit locals " + symbol_table.size() + "\n"+
-        ".end method\n"); 
+        ".end method\n");
+            for(int i = 0; i < used_table.size(); i++) {
+                if(!used_table.get(i))
+                    System.err.println("warning: Variable '" + symbol_table.get(i) + "' not used");    
+            }
         }
     ;
 
@@ -111,12 +122,33 @@ statement
 st_attr
     : VAR ATTR (exp = exp_arithmetic) NL
     {
-        System.err.println("Tipo " + $exp.type);
         if($exp.type == 'i'){
-            emit("\t\tistore " + createVariable($VAR.text, 'i'), -1);
+            if(!symbol_table.contains($VAR.text)) {
+                emit("\t\tistore " + createVariable($VAR.text, 'i'), -1);
+            }
+            else {
+                if(type_table.get(findVariable($VAR.text)) != 'i') {
+                    System.err.println("error: Variable '" + $VAR.text + "' is string");
+                    System.exit(3);
+                }
+                else {
+                    emit("\t\tistore " + createVariable($VAR.text, 'i'), -1);    
+                }
+            }
         }
         else{
-            emit("\t\tastore " + createVariable($VAR.text, 's'), -1);
+            if(!symbol_table.contains($VAR.text)) {
+                emit("\t\tastore " + createVariable($VAR.text, 's'), -1);
+            }
+            else {
+                if(type_table.get(findVariable($VAR.text)) != 's') {
+                    System.err.println("error: Variable '" + $VAR.text + "' is integer");
+                    System.exit(3);
+                }
+                else {
+                    emit("\t\tastore " + createVariable($VAR.text, 's'), -1);    
+                }
+            }
         }
     }
     ;
@@ -144,12 +176,12 @@ exp_arithmetic returns [char type]
       } 
       ( op = ( PLUS | MINUS ) r_term = term {
         if($l_term.type == 's' || $r_term.type == 's') {
-            System.err.println("Invalid statement sucker");
+            System.err.println("Can't apply operator on string!");
             System.exit(3);
         }
         else{
             $type = 'i';
-            emit(($op.type == PLUS) ? "\t\tiadd":"\t\tisubt", -1);
+            emit(($op.type == PLUS) ? "\t\tiadd":"\t\tisub", -1);
         }
     })*
     ;
@@ -164,7 +196,8 @@ term returns [char type]
 
       ( op = ( TIMES | OVER | REM) r_fact = factor {
         if($l_fact.type == 's' || $r_fact.type == 's') {
-            $type = 's';
+            System.err.println("Can't apply operator on string!");
+            System.exit(3);
         }
         else{
             $type = 'i';

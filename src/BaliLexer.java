@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 Bali.g 2016-09-28 14:56:28
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 Bali.g 2016-10-05 17:51:16
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -7,13 +7,14 @@ import java.util.ArrayList;
 
 public class BaliLexer extends Lexer {
     public static final int PRINT=12;
-    public static final int VAR=18;
+    public static final int VAR=17;
     public static final int READINT=13;
     public static final int READSTR=14;
     public static final int OPEN_P=10;
+    public static final int COMMENT=18;
     public static final int MINUS=6;
-    public static final int SPACE=16;
-    public static final int STR=17;
+    public static final int STR=16;
+    public static final int SPACE=20;
     public static final int CLOSE_P=11;
     public static final int EOF=-1;
     public static final int TIMES=7;
@@ -265,10 +266,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = NUM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:76:9: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
-            // Bali.g:76:11: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
+            // Bali.g:82:9: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
+            // Bali.g:82:11: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
             {
-            // Bali.g:76:11: ( '0' .. '9' )+
+            // Bali.g:82:11: ( '0' .. '9' )+
             int cnt1=0;
             loop1:
             do {
@@ -282,7 +283,7 @@ public class BaliLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // Bali.g:76:11: '0' .. '9'
+            	    // Bali.g:82:11: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -298,7 +299,7 @@ public class BaliLexer extends Lexer {
                 cnt1++;
             } while (true);
 
-            // Bali.g:76:20: ( '.' ( '0' .. '9' )+ )?
+            // Bali.g:82:20: ( '.' ( '0' .. '9' )+ )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -307,10 +308,10 @@ public class BaliLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // Bali.g:76:21: '.' ( '0' .. '9' )+
+                    // Bali.g:82:21: '.' ( '0' .. '9' )+
                     {
                     match('.'); 
-                    // Bali.g:76:25: ( '0' .. '9' )+
+                    // Bali.g:82:25: ( '0' .. '9' )+
                     int cnt2=0;
                     loop2:
                     do {
@@ -324,7 +325,7 @@ public class BaliLexer extends Lexer {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // Bali.g:76:25: '0' .. '9'
+                    	    // Bali.g:82:25: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -357,87 +358,29 @@ public class BaliLexer extends Lexer {
     }
     // $ANTLR end "NUM"
 
-    // $ANTLR start "SPACE"
-    public final void mSPACE() throws RecognitionException {
+    // $ANTLR start "STR"
+    public final void mSTR() throws RecognitionException {
         try {
-            int _type = SPACE;
+            int _type = STR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:77:9: ( ( ' ' | '\\t' )+ )
-            // Bali.g:77:11: ( ' ' | '\\t' )+
+            // Bali.g:83:9: ( '\"' (~ ( '\"' ) )* '\"' )
+            // Bali.g:83:11: '\"' (~ ( '\"' ) )* '\"'
             {
-            // Bali.g:77:11: ( ' ' | '\\t' )+
-            int cnt4=0;
+            match('\"'); 
+            // Bali.g:83:14: (~ ( '\"' ) )*
             loop4:
             do {
                 int alt4=2;
                 int LA4_0 = input.LA(1);
 
-                if ( (LA4_0=='\t'||LA4_0==' ') ) {
+                if ( ((LA4_0>='\u0000' && LA4_0<='!')||(LA4_0>='#' && LA4_0<='\uFFFF')) ) {
                     alt4=1;
                 }
 
 
                 switch (alt4) {
             	case 1 :
-            	    // Bali.g:
-            	    {
-            	    if ( input.LA(1)=='\t'||input.LA(1)==' ' ) {
-            	        input.consume();
-
-            	    }
-            	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        recover(mse);
-            	        throw mse;}
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    if ( cnt4 >= 1 ) break loop4;
-                        EarlyExitException eee =
-                            new EarlyExitException(4, input);
-                        throw eee;
-                }
-                cnt4++;
-            } while (true);
-
-             skip(); 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "SPACE"
-
-    // $ANTLR start "STR"
-    public final void mSTR() throws RecognitionException {
-        try {
-            int _type = STR;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:78:9: ( '\"' (~ ( '\"' ) )* '\"' )
-            // Bali.g:78:11: '\"' (~ ( '\"' ) )* '\"'
-            {
-            match('\"'); 
-            // Bali.g:78:14: (~ ( '\"' ) )*
-            loop5:
-            do {
-                int alt5=2;
-                int LA5_0 = input.LA(1);
-
-                if ( ((LA5_0>='\u0000' && LA5_0<='!')||(LA5_0>='#' && LA5_0<='\uFFFF')) ) {
-                    alt5=1;
-                }
-
-
-                switch (alt5) {
-            	case 1 :
-            	    // Bali.g:78:14: ~ ( '\"' )
+            	    // Bali.g:83:14: ~ ( '\"' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -453,7 +396,7 @@ public class BaliLexer extends Lexer {
             	    break;
 
             	default :
-            	    break loop5;
+            	    break loop4;
                 }
             } while (true);
 
@@ -474,24 +417,24 @@ public class BaliLexer extends Lexer {
         try {
             int _type = VAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:79:9: ( ( 'a' .. 'z' )+ )
-            // Bali.g:79:11: ( 'a' .. 'z' )+
+            // Bali.g:84:9: ( ( 'a' .. 'z' )+ )
+            // Bali.g:84:11: ( 'a' .. 'z' )+
             {
-            // Bali.g:79:11: ( 'a' .. 'z' )+
-            int cnt6=0;
-            loop6:
+            // Bali.g:84:11: ( 'a' .. 'z' )+
+            int cnt5=0;
+            loop5:
             do {
-                int alt6=2;
-                int LA6_0 = input.LA(1);
+                int alt5=2;
+                int LA5_0 = input.LA(1);
 
-                if ( ((LA6_0>='a' && LA6_0<='z')) ) {
-                    alt6=1;
+                if ( ((LA5_0>='a' && LA5_0<='z')) ) {
+                    alt5=1;
                 }
 
 
-                switch (alt6) {
+                switch (alt5) {
             	case 1 :
-            	    // Bali.g:79:11: 'a' .. 'z'
+            	    // Bali.g:84:11: 'a' .. 'z'
             	    {
             	    matchRange('a','z'); 
 
@@ -499,12 +442,12 @@ public class BaliLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt6 >= 1 ) break loop6;
+            	    if ( cnt5 >= 1 ) break loop5;
                         EarlyExitException eee =
-                            new EarlyExitException(6, input);
+                            new EarlyExitException(5, input);
                         throw eee;
                 }
-                cnt6++;
+                cnt5++;
             } while (true);
 
 
@@ -518,15 +461,69 @@ public class BaliLexer extends Lexer {
     }
     // $ANTLR end "VAR"
 
+    // $ANTLR start "COMMENT"
+    public final void mCOMMENT() throws RecognitionException {
+        try {
+            int _type = COMMENT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // Bali.g:85:9: ( '#' (~ ( '\\n' ) )* )
+            // Bali.g:85:11: '#' (~ ( '\\n' ) )*
+            {
+            match('#'); 
+            // Bali.g:85:15: (~ ( '\\n' ) )*
+            loop6:
+            do {
+                int alt6=2;
+                int LA6_0 = input.LA(1);
+
+                if ( ((LA6_0>='\u0000' && LA6_0<='\t')||(LA6_0>='\u000B' && LA6_0<='\uFFFF')) ) {
+                    alt6=1;
+                }
+
+
+                switch (alt6) {
+            	case 1 :
+            	    // Bali.g:85:15: ~ ( '\\n' )
+            	    {
+            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\uFFFF') ) {
+            	        input.consume();
+
+            	    }
+            	    else {
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop6;
+                }
+            } while (true);
+
+             skip(); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "COMMENT"
+
     // $ANTLR start "NL"
     public final void mNL() throws RecognitionException {
         try {
             int _type = NL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:80:9: ( ( '\\r' )? '\\n' )
-            // Bali.g:80:11: ( '\\r' )? '\\n'
+            // Bali.g:86:9: ( ( '\\r' )? '\\n' )
+            // Bali.g:86:11: ( '\\r' )? '\\n'
             {
-            // Bali.g:80:11: ( '\\r' )?
+            // Bali.g:86:11: ( '\\r' )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -535,7 +532,7 @@ public class BaliLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // Bali.g:80:12: '\\r'
+                    // Bali.g:86:12: '\\r'
                     {
                     match('\r'); 
 
@@ -556,11 +553,69 @@ public class BaliLexer extends Lexer {
     }
     // $ANTLR end "NL"
 
+    // $ANTLR start "SPACE"
+    public final void mSPACE() throws RecognitionException {
+        try {
+            int _type = SPACE;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // Bali.g:87:9: ( ( ' ' | '\\t' )+ )
+            // Bali.g:87:11: ( ' ' | '\\t' )+
+            {
+            // Bali.g:87:11: ( ' ' | '\\t' )+
+            int cnt8=0;
+            loop8:
+            do {
+                int alt8=2;
+                int LA8_0 = input.LA(1);
+
+                if ( (LA8_0=='\t'||LA8_0==' ') ) {
+                    alt8=1;
+                }
+
+
+                switch (alt8) {
+            	case 1 :
+            	    // Bali.g:
+            	    {
+            	    if ( input.LA(1)=='\t'||input.LA(1)==' ' ) {
+            	        input.consume();
+
+            	    }
+            	    else {
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    if ( cnt8 >= 1 ) break loop8;
+                        EarlyExitException eee =
+                            new EarlyExitException(8, input);
+                        throw eee;
+                }
+                cnt8++;
+            } while (true);
+
+             skip(); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "SPACE"
+
     public void mTokens() throws RecognitionException {
-        // Bali.g:1:8: ( ATTR | PLUS | MINUS | TIMES | OVER | REM | OPEN_P | CLOSE_P | PRINT | READINT | READSTR | NUM | SPACE | STR | VAR | NL )
-        int alt8=16;
-        alt8 = dfa8.predict(input);
-        switch (alt8) {
+        // Bali.g:1:8: ( ATTR | PLUS | MINUS | TIMES | OVER | REM | OPEN_P | CLOSE_P | PRINT | READINT | READSTR | NUM | STR | VAR | COMMENT | NL | SPACE )
+        int alt9=17;
+        alt9 = dfa9.predict(input);
+        switch (alt9) {
             case 1 :
                 // Bali.g:1:10: ATTR
                 {
@@ -646,30 +701,37 @@ public class BaliLexer extends Lexer {
                 }
                 break;
             case 13 :
-                // Bali.g:1:82: SPACE
-                {
-                mSPACE(); 
-
-                }
-                break;
-            case 14 :
-                // Bali.g:1:88: STR
+                // Bali.g:1:82: STR
                 {
                 mSTR(); 
 
                 }
                 break;
-            case 15 :
-                // Bali.g:1:92: VAR
+            case 14 :
+                // Bali.g:1:86: VAR
                 {
                 mVAR(); 
 
                 }
                 break;
+            case 15 :
+                // Bali.g:1:90: COMMENT
+                {
+                mCOMMENT(); 
+
+                }
+                break;
             case 16 :
-                // Bali.g:1:96: NL
+                // Bali.g:1:98: NL
                 {
                 mNL(); 
+
+                }
+                break;
+            case 17 :
+                // Bali.g:1:101: SPACE
+                {
+                mSPACE(); 
 
                 }
                 break;
@@ -679,26 +741,26 @@ public class BaliLexer extends Lexer {
     }
 
 
-    protected DFA8 dfa8 = new DFA8(this);
-    static final String DFA8_eotS =
-        "\11\uffff\2\16\5\uffff\6\16\1\30\4\uffff";
-    static final String DFA8_eofS =
-        "\33\uffff";
-    static final String DFA8_minS =
-        "\1\11\10\uffff\1\162\1\145\5\uffff\1\151\1\141\1\156\1\144\1\164"+
+    protected DFA9 dfa9 = new DFA9(this);
+    static final String DFA9_eotS =
+        "\11\uffff\2\15\6\uffff\6\15\1\31\4\uffff";
+    static final String DFA9_eofS =
+        "\34\uffff";
+    static final String DFA9_minS =
+        "\1\11\10\uffff\1\162\1\145\6\uffff\1\151\1\141\1\156\1\144\1\164"+
         "\1\137\1\141\1\151\3\uffff";
-    static final String DFA8_maxS =
-        "\1\172\10\uffff\1\162\1\145\5\uffff\1\151\1\141\1\156\1\144\1\164"+
+    static final String DFA9_maxS =
+        "\1\172\10\uffff\1\162\1\145\6\uffff\1\151\1\141\1\156\1\144\1\164"+
         "\1\137\1\172\1\163\3\uffff";
-    static final String DFA8_acceptS =
+    static final String DFA9_acceptS =
         "\1\uffff\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\2\uffff\1\14\1\15\1\16"+
-        "\1\17\1\20\10\uffff\1\11\1\12\1\13";
-    static final String DFA8_specialS =
-        "\33\uffff}>";
-    static final String[] DFA8_transitionS = {
-            "\1\14\1\17\2\uffff\1\17\22\uffff\1\14\1\uffff\1\15\2\uffff\1"+
-            "\6\2\uffff\1\7\1\10\1\4\1\2\1\uffff\1\3\1\uffff\1\5\12\13\3"+
-            "\uffff\1\1\43\uffff\17\16\1\11\1\16\1\12\10\16",
+        "\1\17\1\20\1\21\10\uffff\1\11\1\12\1\13";
+    static final String DFA9_specialS =
+        "\34\uffff}>";
+    static final String[] DFA9_transitionS = {
+            "\1\20\1\17\2\uffff\1\17\22\uffff\1\20\1\uffff\1\14\1\16\1\uffff"+
+            "\1\6\2\uffff\1\7\1\10\1\4\1\2\1\uffff\1\3\1\uffff\1\5\12\13"+
+            "\3\uffff\1\1\43\uffff\17\15\1\11\1\15\1\12\10\15",
             "",
             "",
             "",
@@ -707,57 +769,58 @@ public class BaliLexer extends Lexer {
             "",
             "",
             "",
-            "\1\20",
             "\1\21",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\22",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\23",
             "\1\24",
             "\1\25",
             "\1\26",
             "\1\27",
-            "\32\16",
-            "\1\31\11\uffff\1\32",
+            "\1\30",
+            "\32\15",
+            "\1\32\11\uffff\1\33",
             "",
             "",
             ""
     };
 
-    static final short[] DFA8_eot = DFA.unpackEncodedString(DFA8_eotS);
-    static final short[] DFA8_eof = DFA.unpackEncodedString(DFA8_eofS);
-    static final char[] DFA8_min = DFA.unpackEncodedStringToUnsignedChars(DFA8_minS);
-    static final char[] DFA8_max = DFA.unpackEncodedStringToUnsignedChars(DFA8_maxS);
-    static final short[] DFA8_accept = DFA.unpackEncodedString(DFA8_acceptS);
-    static final short[] DFA8_special = DFA.unpackEncodedString(DFA8_specialS);
-    static final short[][] DFA8_transition;
+    static final short[] DFA9_eot = DFA.unpackEncodedString(DFA9_eotS);
+    static final short[] DFA9_eof = DFA.unpackEncodedString(DFA9_eofS);
+    static final char[] DFA9_min = DFA.unpackEncodedStringToUnsignedChars(DFA9_minS);
+    static final char[] DFA9_max = DFA.unpackEncodedStringToUnsignedChars(DFA9_maxS);
+    static final short[] DFA9_accept = DFA.unpackEncodedString(DFA9_acceptS);
+    static final short[] DFA9_special = DFA.unpackEncodedString(DFA9_specialS);
+    static final short[][] DFA9_transition;
 
     static {
-        int numStates = DFA8_transitionS.length;
-        DFA8_transition = new short[numStates][];
+        int numStates = DFA9_transitionS.length;
+        DFA9_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA8_transition[i] = DFA.unpackEncodedString(DFA8_transitionS[i]);
+            DFA9_transition[i] = DFA.unpackEncodedString(DFA9_transitionS[i]);
         }
     }
 
-    class DFA8 extends DFA {
+    class DFA9 extends DFA {
 
-        public DFA8(BaseRecognizer recognizer) {
+        public DFA9(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 8;
-            this.eot = DFA8_eot;
-            this.eof = DFA8_eof;
-            this.min = DFA8_min;
-            this.max = DFA8_max;
-            this.accept = DFA8_accept;
-            this.special = DFA8_special;
-            this.transition = DFA8_transition;
+            this.decisionNumber = 9;
+            this.eot = DFA9_eot;
+            this.eof = DFA9_eof;
+            this.min = DFA9_min;
+            this.max = DFA9_max;
+            this.accept = DFA9_accept;
+            this.special = DFA9_special;
+            this.transition = DFA9_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( ATTR | PLUS | MINUS | TIMES | OVER | REM | OPEN_P | CLOSE_P | PRINT | READINT | READSTR | NUM | SPACE | STR | VAR | NL );";
+            return "1:1: Tokens : ( ATTR | PLUS | MINUS | TIMES | OVER | REM | OPEN_P | CLOSE_P | PRINT | READINT | READSTR | NUM | STR | VAR | COMMENT | NL | SPACE );";
         }
     }
  
