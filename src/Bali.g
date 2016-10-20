@@ -10,8 +10,17 @@ tokens
     TIMES   = '*' ;
     OVER    = '/' ;
     REM     = '%' ;
+    EQ      = '==';
+    NE      = '!=';
+    GT      = '>' ;
+    GE      = '>=';
+    LT      = '<' ;
+    LE      = '<=';
     OPEN_P  = '(' ;
     CLOSE_P = ')' ;
+    OPEN_C  = '{' ;
+    CLOSE_C = '}' ;
+    WHILE   = 'while';
     PRINT   = 'print' ;
     READINT = 'read_int' ;
     READSTR = 'read_str' ;
@@ -30,7 +39,7 @@ tokens
     private static ArrayList<Character> type_table;
     private static ArrayList<Boolean> used_table;
     
-    public static int stack = 0, max_stack = 0;
+    public static int stack = 0, max_stack = 0, while_counter = 0;
 
     public static void main(String[] args) throws Exception
     {
@@ -116,7 +125,7 @@ program
     ;
 
 statement
-    : NL | st_attr | st_print
+    : NL | st_attr | st_print | st_while
     ;
 
 st_attr
@@ -165,6 +174,51 @@ st_print
             emit("\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n", -2); 
     }
     NL
+    ;
+
+st_while
+    :
+    WHILE {
+        emit("BEGIN_WHILE_" + ++while_counter + ":", 0);
+    }
+    conditional = exp_conditional OPEN_C NL {
+        //System.err.println($conditional.type)
+        emit($conditional.type + " " + "END_WHILE_" + while_counter + " ;", -2);
+    } 
+    (statement)* 
+    CLOSE_C {
+        emit("\t\tgoto BEGIN_WHILE_" + while_counter + " ;", 0);
+        emit("END_WHILE_" + while_counter + ":", 0);
+    }
+    NL
+    ;
+
+exp_conditional returns [String type]
+    :
+    l_exp = exp_arithmetic op = (EQ | NE | GT | GE | LT | LE) r_exp = exp_arithmetic {
+        if($l_exp.type != 'i' || $r_exp.type != 'i'){
+            System.err.println("Can't apply operator on string!");
+            System.exit(3);
+        }
+        if($op.type == EQ){
+            $type = "if_icmpne";
+        }
+        else if($op.type == NE) {
+            $type = "if_icmpeq";
+        }
+        else if($op.type == GT) {
+            $type = "if_icmple";
+        }
+        else if($op.type == GE) {
+            $type = "if_icmplt";
+        }
+        else if($op.type == LT) {
+            $type = "if_icmpge";
+        }
+        else if($op.type == LE) {
+            $type = "if_icmpgt";
+        }
+    }
     ;
 
 exp_arithmetic returns [char type]
