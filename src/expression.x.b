@@ -11,18 +11,44 @@
 .method public static main([Ljava/lang/String;)V
 
 
-		ldc 1
-		istore 1
 	getstatic java/lang/System/out Ljava/io/PrintStream;
-		iload 1
-	invokevirtual java/io/PrintStream/println(I)V
+		ldc "Type a number:"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
-		ldc 3
-		istore 2
+	invokestatic Runtime/readInt()I ;
+		istore 1
+		iload 1
+		ldc 5
+if_icmpge NOT_IF_1 ;
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+		ldc "The variable a is lesser than 5"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+
+		goto END_ELSE_1 ;
+NOT_IF_1:
+		iload 1
+		ldc 5
+if_icmpne NOT_IF_2 ;
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+		ldc "The variable is equal to 5"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+
+		goto END_ELSE_2 ;
+NOT_IF_2:
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+		ldc "The variable is greater than 5"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+
+END_ELSE_2:
+END_ELSE_1:
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+		ldc "End of program."
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+
 	return
 
 .limit stack 2
-.limit locals 3
+.limit locals 2
 .end method
 
-; symbols: [args, x, b]
+; symbols: [args, a]

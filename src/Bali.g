@@ -20,6 +20,8 @@ tokens
     CLOSE_P = ')' ;
     OPEN_C  = '{' ;
     CLOSE_C = '}' ;
+    IF      = 'if';
+    ELSE    = 'else';
     WHILE   = 'while';
     PRINT   = 'print' ;
     READINT = 'read_int' ;
@@ -39,7 +41,7 @@ tokens
     private static ArrayList<Character> type_table;
     private static ArrayList<Boolean> used_table;
     
-    public static int stack = 0, max_stack = 0, while_counter = 0;
+    public static int stack = 0, max_stack = 0, if_counter = 0, while_counter = 0;
 
     public static void main(String[] args) throws Exception
     {
@@ -125,7 +127,7 @@ program
     ;
 
 statement
-    : NL | st_attr | st_print | st_while
+    : NL | st_attr | st_print | st_while | st_if
     ;
 
 st_attr
@@ -179,18 +181,41 @@ st_print
 st_while
     :
     WHILE {
-        emit("BEGIN_WHILE_" + ++while_counter + ":", 0);
+        int c = ++while_counter;
+        emit("BEGIN_WHILE_" + c + ":", 0);
     }
     conditional = exp_conditional OPEN_C NL {
-        //System.err.println($conditional.type)
-        emit($conditional.type + " " + "END_WHILE_" + while_counter + " ;", -2);
+        emit($conditional.type + " " + "END_WHILE_" + c + " ;", -2);
     } 
     (statement)* 
     CLOSE_C {
-        emit("\t\tgoto BEGIN_WHILE_" + while_counter + " ;", 0);
-        emit("END_WHILE_" + while_counter + ":", 0);
+        emit("\t\tgoto BEGIN_WHILE_" + c + " ;", 0);
+        emit("END_WHILE_" + c + ":", 0);
     }
     NL
+    ;
+
+st_if
+    :
+    IF {
+        boolean has_else = false;
+        int c = ++if_counter;
+    } 
+    conditional = exp_conditional OPEN_C NL {
+        emit($conditional.type + " " + "NOT_IF_" + c + " ;", -2);
+    }
+    (statement)* CLOSE_C 
+    NL
+    ( ELSE {
+        has_else = true;
+        emit("\t\tgoto END_ELSE_" + c + " ;", 0);
+        emit("NOT_IF_" + c + ":", 0);
+    }
+    OPEN_C NL (statement)* CLOSE_C NL
+    )?
+    {
+        emit((has_else?"END_ELSE_":"NOT_IF_") + c + ":", 0);
+    }
     ;
 
 exp_conditional returns [String type]

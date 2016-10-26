@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 Bali.g 2016-10-20 15:04:43
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 Bali.g 2016-10-26 17:48:27
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -6,22 +6,24 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class BaliLexer extends Lexer {
-    public static final int PRINT=21;
-    public static final int VAR=26;
+    public static final int PRINT=23;
+    public static final int VAR=28;
     public static final int LT=14;
-    public static final int READINT=22;
-    public static final int READSTR=23;
+    public static final int READINT=24;
+    public static final int READSTR=25;
     public static final int OPEN_P=16;
-    public static final int COMMENT=27;
+    public static final int COMMENT=29;
     public static final int MINUS=6;
-    public static final int STR=25;
-    public static final int SPACE=29;
+    public static final int STR=27;
+    public static final int SPACE=31;
     public static final int CLOSE_P=17;
     public static final int OPEN_C=18;
+    public static final int ELSE=21;
     public static final int EOF=-1;
+    public static final int IF=20;
     public static final int GE=13;
     public static final int TIMES=7;
-    public static final int NUM=24;
+    public static final int NUM=26;
     public static final int EQ=10;
     public static final int GT=12;
     public static final int CLOSE_C=19;
@@ -29,9 +31,9 @@ public class BaliLexer extends Lexer {
     public static final int OVER=8;
     public static final int NE=11;
     public static final int LE=15;
-    public static final int WHILE=20;
+    public static final int WHILE=22;
     public static final int REM=9;
-    public static final int NL=28;
+    public static final int NL=30;
     public static final int PLUS=5;
 
     // delegates
@@ -371,13 +373,55 @@ public class BaliLexer extends Lexer {
     }
     // $ANTLR end "CLOSE_C"
 
+    // $ANTLR start "IF"
+    public final void mIF() throws RecognitionException {
+        try {
+            int _type = IF;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // Bali.g:19:4: ( 'if' )
+            // Bali.g:19:6: 'if'
+            {
+            match("if"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "IF"
+
+    // $ANTLR start "ELSE"
+    public final void mELSE() throws RecognitionException {
+        try {
+            int _type = ELSE;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // Bali.g:20:6: ( 'else' )
+            // Bali.g:20:8: 'else'
+            {
+            match("else"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "ELSE"
+
     // $ANTLR start "WHILE"
     public final void mWHILE() throws RecognitionException {
         try {
             int _type = WHILE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:19:7: ( 'while' )
-            // Bali.g:19:9: 'while'
+            // Bali.g:21:7: ( 'while' )
+            // Bali.g:21:9: 'while'
             {
             match("while"); 
 
@@ -397,8 +441,8 @@ public class BaliLexer extends Lexer {
         try {
             int _type = PRINT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:20:7: ( 'print' )
-            // Bali.g:20:9: 'print'
+            // Bali.g:22:7: ( 'print' )
+            // Bali.g:22:9: 'print'
             {
             match("print"); 
 
@@ -418,8 +462,8 @@ public class BaliLexer extends Lexer {
         try {
             int _type = READINT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:21:9: ( 'read_int' )
-            // Bali.g:21:11: 'read_int'
+            // Bali.g:23:9: ( 'read_int' )
+            // Bali.g:23:11: 'read_int'
             {
             match("read_int"); 
 
@@ -439,8 +483,8 @@ public class BaliLexer extends Lexer {
         try {
             int _type = READSTR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:22:9: ( 'read_str' )
-            // Bali.g:22:11: 'read_str'
+            // Bali.g:24:9: ( 'read_str' )
+            // Bali.g:24:11: 'read_str'
             {
             match("read_str"); 
 
@@ -460,10 +504,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = NUM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:91:9: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
-            // Bali.g:91:11: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
+            // Bali.g:93:9: ( ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )? )
+            // Bali.g:93:11: ( '0' .. '9' )+ ( '.' ( '0' .. '9' )+ )?
             {
-            // Bali.g:91:11: ( '0' .. '9' )+
+            // Bali.g:93:11: ( '0' .. '9' )+
             int cnt1=0;
             loop1:
             do {
@@ -477,7 +521,7 @@ public class BaliLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // Bali.g:91:11: '0' .. '9'
+            	    // Bali.g:93:11: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -493,7 +537,7 @@ public class BaliLexer extends Lexer {
                 cnt1++;
             } while (true);
 
-            // Bali.g:91:20: ( '.' ( '0' .. '9' )+ )?
+            // Bali.g:93:20: ( '.' ( '0' .. '9' )+ )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -502,10 +546,10 @@ public class BaliLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // Bali.g:91:21: '.' ( '0' .. '9' )+
+                    // Bali.g:93:21: '.' ( '0' .. '9' )+
                     {
                     match('.'); 
-                    // Bali.g:91:25: ( '0' .. '9' )+
+                    // Bali.g:93:25: ( '0' .. '9' )+
                     int cnt2=0;
                     loop2:
                     do {
@@ -519,7 +563,7 @@ public class BaliLexer extends Lexer {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // Bali.g:91:25: '0' .. '9'
+                    	    // Bali.g:93:25: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -557,11 +601,11 @@ public class BaliLexer extends Lexer {
         try {
             int _type = STR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:92:9: ( '\"' (~ ( '\"' ) )* '\"' )
-            // Bali.g:92:11: '\"' (~ ( '\"' ) )* '\"'
+            // Bali.g:94:9: ( '\"' (~ ( '\"' ) )* '\"' )
+            // Bali.g:94:11: '\"' (~ ( '\"' ) )* '\"'
             {
             match('\"'); 
-            // Bali.g:92:14: (~ ( '\"' ) )*
+            // Bali.g:94:14: (~ ( '\"' ) )*
             loop4:
             do {
                 int alt4=2;
@@ -574,7 +618,7 @@ public class BaliLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // Bali.g:92:14: ~ ( '\"' )
+            	    // Bali.g:94:14: ~ ( '\"' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -611,10 +655,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = VAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:93:9: ( ( 'a' .. 'z' )+ )
-            // Bali.g:93:11: ( 'a' .. 'z' )+
+            // Bali.g:95:9: ( ( 'a' .. 'z' )+ )
+            // Bali.g:95:11: ( 'a' .. 'z' )+
             {
-            // Bali.g:93:11: ( 'a' .. 'z' )+
+            // Bali.g:95:11: ( 'a' .. 'z' )+
             int cnt5=0;
             loop5:
             do {
@@ -628,7 +672,7 @@ public class BaliLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // Bali.g:93:11: 'a' .. 'z'
+            	    // Bali.g:95:11: 'a' .. 'z'
             	    {
             	    matchRange('a','z'); 
 
@@ -660,11 +704,11 @@ public class BaliLexer extends Lexer {
         try {
             int _type = COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:94:9: ( '#' (~ ( '\\n' ) )* )
-            // Bali.g:94:11: '#' (~ ( '\\n' ) )*
+            // Bali.g:96:9: ( '#' (~ ( '\\n' ) )* )
+            // Bali.g:96:11: '#' (~ ( '\\n' ) )*
             {
             match('#'); 
-            // Bali.g:94:15: (~ ( '\\n' ) )*
+            // Bali.g:96:15: (~ ( '\\n' ) )*
             loop6:
             do {
                 int alt6=2;
@@ -677,7 +721,7 @@ public class BaliLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // Bali.g:94:15: ~ ( '\\n' )
+            	    // Bali.g:96:15: ~ ( '\\n' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -714,10 +758,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = NL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:95:9: ( ( '\\r' )? '\\n' )
-            // Bali.g:95:11: ( '\\r' )? '\\n'
+            // Bali.g:97:9: ( ( '\\r' )? '\\n' )
+            // Bali.g:97:11: ( '\\r' )? '\\n'
             {
-            // Bali.g:95:11: ( '\\r' )?
+            // Bali.g:97:11: ( '\\r' )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -726,7 +770,7 @@ public class BaliLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // Bali.g:95:12: '\\r'
+                    // Bali.g:97:12: '\\r'
                     {
                     match('\r'); 
 
@@ -752,10 +796,10 @@ public class BaliLexer extends Lexer {
         try {
             int _type = SPACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // Bali.g:96:9: ( ( ' ' | '\\t' )+ )
-            // Bali.g:96:11: ( ' ' | '\\t' )+
+            // Bali.g:98:9: ( ( ' ' | '\\t' )+ )
+            // Bali.g:98:11: ( ' ' | '\\t' )+
             {
-            // Bali.g:96:11: ( ' ' | '\\t' )+
+            // Bali.g:98:11: ( ' ' | '\\t' )+
             int cnt8=0;
             loop8:
             do {
@@ -806,8 +850,8 @@ public class BaliLexer extends Lexer {
     // $ANTLR end "SPACE"
 
     public void mTokens() throws RecognitionException {
-        // Bali.g:1:8: ( ATTR | PLUS | MINUS | TIMES | OVER | REM | EQ | NE | GT | GE | LT | LE | OPEN_P | CLOSE_P | OPEN_C | CLOSE_C | WHILE | PRINT | READINT | READSTR | NUM | STR | VAR | COMMENT | NL | SPACE )
-        int alt9=26;
+        // Bali.g:1:8: ( ATTR | PLUS | MINUS | TIMES | OVER | REM | EQ | NE | GT | GE | LT | LE | OPEN_P | CLOSE_P | OPEN_C | CLOSE_C | IF | ELSE | WHILE | PRINT | READINT | READSTR | NUM | STR | VAR | COMMENT | NL | SPACE )
+        int alt9=28;
         alt9 = dfa9.predict(input);
         switch (alt9) {
             case 1 :
@@ -923,70 +967,84 @@ public class BaliLexer extends Lexer {
                 }
                 break;
             case 17 :
-                // Bali.g:1:89: WHILE
+                // Bali.g:1:89: IF
+                {
+                mIF(); 
+
+                }
+                break;
+            case 18 :
+                // Bali.g:1:92: ELSE
+                {
+                mELSE(); 
+
+                }
+                break;
+            case 19 :
+                // Bali.g:1:97: WHILE
                 {
                 mWHILE(); 
 
                 }
                 break;
-            case 18 :
-                // Bali.g:1:95: PRINT
+            case 20 :
+                // Bali.g:1:103: PRINT
                 {
                 mPRINT(); 
 
                 }
                 break;
-            case 19 :
-                // Bali.g:1:101: READINT
+            case 21 :
+                // Bali.g:1:109: READINT
                 {
                 mREADINT(); 
 
                 }
                 break;
-            case 20 :
-                // Bali.g:1:109: READSTR
+            case 22 :
+                // Bali.g:1:117: READSTR
                 {
                 mREADSTR(); 
 
                 }
                 break;
-            case 21 :
-                // Bali.g:1:117: NUM
+            case 23 :
+                // Bali.g:1:125: NUM
                 {
                 mNUM(); 
 
                 }
                 break;
-            case 22 :
-                // Bali.g:1:121: STR
+            case 24 :
+                // Bali.g:1:129: STR
                 {
                 mSTR(); 
 
                 }
                 break;
-            case 23 :
-                // Bali.g:1:125: VAR
+            case 25 :
+                // Bali.g:1:133: VAR
                 {
                 mVAR(); 
 
                 }
                 break;
-            case 24 :
-                // Bali.g:1:129: COMMENT
+            case 26 :
+                // Bali.g:1:137: COMMENT
                 {
                 mCOMMENT(); 
 
                 }
                 break;
-            case 25 :
-                // Bali.g:1:137: NL
+            case 27 :
+                // Bali.g:1:145: NL
                 {
                 mNL(); 
 
                 }
                 break;
-            case 26 :
-                // Bali.g:1:140: SPACE
+            case 28 :
+                // Bali.g:1:148: SPACE
                 {
                 mSPACE(); 
 
@@ -1000,67 +1058,77 @@ public class BaliLexer extends Lexer {
 
     protected DFA9 dfa9 = new DFA9(this);
     static final String DFA9_eotS =
-        "\1\uffff\1\30\6\uffff\1\32\1\34\4\uffff\3\23\14\uffff\11\23\1\51"+
-        "\1\52\5\uffff";
+        "\1\uffff\1\32\6\uffff\1\34\1\36\4\uffff\5\25\14\uffff\1\44\4\25"+
+        "\1\uffff\4\25\1\55\3\25\1\uffff\1\61\1\62\5\uffff";
     static final String DFA9_eofS =
-        "\55\uffff";
+        "\65\uffff";
     static final String DFA9_minS =
-        "\1\11\1\75\6\uffff\2\75\4\uffff\1\150\1\162\1\145\14\uffff\2\151"+
-        "\1\141\1\154\1\156\1\144\1\145\1\164\1\137\2\141\1\151\4\uffff";
+        "\1\11\1\75\6\uffff\2\75\4\uffff\1\146\1\154\1\150\1\162\1\145\14"+
+        "\uffff\1\141\1\163\2\151\1\141\1\uffff\1\145\1\154\1\156\1\144\1"+
+        "\141\1\145\1\164\1\137\1\uffff\2\141\1\151\4\uffff";
     static final String DFA9_maxS =
-        "\1\175\1\75\6\uffff\2\75\4\uffff\1\150\1\162\1\145\14\uffff\2\151"+
-        "\1\141\1\154\1\156\1\144\1\145\1\164\1\137\2\172\1\163\4\uffff";
+        "\1\175\1\75\6\uffff\2\75\4\uffff\1\146\1\154\1\150\1\162\1\145\14"+
+        "\uffff\1\172\1\163\2\151\1\141\1\uffff\1\145\1\154\1\156\1\144\1"+
+        "\172\1\145\1\164\1\137\1\uffff\2\172\1\163\4\uffff";
     static final String DFA9_acceptS =
-        "\2\uffff\1\2\1\3\1\4\1\5\1\6\1\10\2\uffff\1\15\1\16\1\17\1\20\3"+
-        "\uffff\1\25\1\26\1\27\1\30\1\31\1\32\1\7\1\1\1\12\1\11\1\14\1\13"+
-        "\14\uffff\1\21\1\22\1\23\1\24";
+        "\2\uffff\1\2\1\3\1\4\1\5\1\6\1\10\2\uffff\1\15\1\16\1\17\1\20\5"+
+        "\uffff\1\27\1\30\1\31\1\32\1\33\1\34\1\7\1\1\1\12\1\11\1\14\1\13"+
+        "\5\uffff\1\21\10\uffff\1\22\3\uffff\1\23\1\24\1\25\1\26";
     static final String DFA9_specialS =
-        "\55\uffff}>";
+        "\65\uffff}>";
     static final String[] DFA9_transitionS = {
-            "\1\26\1\25\2\uffff\1\25\22\uffff\1\26\1\7\1\22\1\24\1\uffff"+
-            "\1\6\2\uffff\1\12\1\13\1\4\1\2\1\uffff\1\3\1\uffff\1\5\12\21"+
-            "\2\uffff\1\11\1\1\1\10\42\uffff\17\23\1\17\1\23\1\20\4\23\1"+
-            "\16\3\23\1\14\1\uffff\1\15",
-            "\1\27",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "\1\30\1\27\2\uffff\1\27\22\uffff\1\30\1\7\1\24\1\26\1\uffff"+
+            "\1\6\2\uffff\1\12\1\13\1\4\1\2\1\uffff\1\3\1\uffff\1\5\12\23"+
+            "\2\uffff\1\11\1\1\1\10\42\uffff\4\25\1\17\3\25\1\16\6\25\1\21"+
+            "\1\25\1\22\4\25\1\20\3\25\1\14\1\uffff\1\15",
             "\1\31",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\33",
-            "",
-            "",
-            "",
-            "",
             "\1\35",
-            "\1\36",
+            "",
+            "",
+            "",
+            "",
             "\1\37",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\40",
             "\1\41",
             "\1\42",
             "\1\43",
-            "\1\44",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\32\25",
             "\1\45",
             "\1\46",
             "\1\47",
             "\1\50",
-            "\32\23",
-            "\32\23",
-            "\1\53\11\uffff\1\54",
+            "",
+            "\1\51",
+            "\1\52",
+            "\1\53",
+            "\1\54",
+            "\32\25",
+            "\1\56",
+            "\1\57",
+            "\1\60",
+            "",
+            "\32\25",
+            "\32\25",
+            "\1\63\11\uffff\1\64",
             "",
             "",
             "",
@@ -1097,7 +1165,7 @@ public class BaliLexer extends Lexer {
             this.transition = DFA9_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( ATTR | PLUS | MINUS | TIMES | OVER | REM | EQ | NE | GT | GE | LT | LE | OPEN_P | CLOSE_P | OPEN_C | CLOSE_C | WHILE | PRINT | READINT | READSTR | NUM | STR | VAR | COMMENT | NL | SPACE );";
+            return "1:1: Tokens : ( ATTR | PLUS | MINUS | TIMES | OVER | REM | EQ | NE | GT | GE | LT | LE | OPEN_P | CLOSE_P | OPEN_C | CLOSE_C | IF | ELSE | WHILE | PRINT | READINT | READSTR | NUM | STR | VAR | COMMENT | NL | SPACE );";
         }
     }
  
