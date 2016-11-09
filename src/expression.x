@@ -1,17 +1,15 @@
-print "Type a number:"
-a = read_int
-if a < 5 {
-    print "The variable a is lesser than 5"
+procedure cubo () {
+    n = 4
+    print n * n * n
 }
-else {
-	if a == 5 
-	{
-		print "The variable is equal to 5"
-	}
-	else
-	{
-		print "The variable is greater than 5"
-	}
+
+procedure quadrado() {
+	n = 4
+	print n * n
 }
-print "End of program."
+
+n = 1
+cubo()
+quadrado()
+print n
 

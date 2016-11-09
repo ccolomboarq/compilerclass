@@ -1,5 +1,9 @@
 grammar Bali;
 
+options {
+    k = 2;
+}
+
 /*---------------- TOKEN DEFINITIONS ----------------*/
 
 tokens
@@ -26,6 +30,7 @@ tokens
     PRINT   = 'print' ;
     READINT = 'read_int' ;
     READSTR = 'read_str' ;
+    PROCEDURE = 'procedure' ;
 }
 
 /*---------------- COMPILER INTERNALS ----------------*/
@@ -51,13 +56,9 @@ tokens
         BaliParser parser = new BaliParser(tokens);
 
         symbol_table = new ArrayList<String>();
-        symbol_table.add("args");
-
         type_table = new ArrayList<Character>();
-        type_table.add('S');
-
         used_table = new ArrayList<Boolean>();
-        used_table.add(true);
+
         parser.program();
         System.out.println("; symbols: " + symbol_table);
     }
@@ -101,17 +102,24 @@ SPACE   : (' '|'\t')+ { skip(); } ;
 /*---------------- PARSER RULES ----------------*/
 
 program
-    :   { System.out.println(
-        ".source Test.j\n"+
-        ".class  public Test\n"+
-        ".super  java/lang/Object\n\n"+
-        
-        ".method public <init>()V\n"+
-            "\taload_0\n"+
-            "\tinvokenonvirtual java/lang/Object/<init>()V\n"+
-            "\treturn\n"+
-        ".end method\n\n"+
-        ".method public static main([Ljava/lang/String;)V\n\n");
+    :   {
+            System.out.println(
+            ".source Test.j\n"+
+            ".class  public Test\n"+
+            ".super  java/lang/Object\n\n");
+        }
+        (procedure | NL)*
+        { 
+            symbol_table.add("args");
+            type_table.add('S');
+            used_table.add(true);
+            System.out.println(
+            ".method public <init>()V\n"+
+                "\taload_0\n"+
+                "\tinvokenonvirtual java/lang/Object/<init>()V\n"+
+                "\treturn\n"+
+            ".end method\n\n"+
+            ".method public static main([Ljava/lang/String;)V\n\n");
         }
         (statement)+
         { System.out.println(
@@ -126,8 +134,33 @@ program
         }
     ;
 
+procedure
+    :
+    PROCEDURE VAR OPEN_P CLOSE_P OPEN_C NL {
+        System.out.println(
+            ".method public static " + $VAR.text + "()V"
+        );
+    } 
+    (statement)* CLOSE_C {
+        System.out.println(
+            "\treturn\n\n"+
+        ".limit stack " + max_stack +"\n"+
+        ".limit locals " + symbol_table.size() + "\n"+
+        ".end method\n");
+            for(int i = 0; i < used_table.size(); i++) {
+                if(!used_table.get(i))
+                    System.err.println("warning: Variable '" + symbol_table.get(i) + "' not used");    
+            }
+        stack = max_stack = 0;
+        symbol_table.clear();
+        type_table.clear();
+        used_table.clear();
+    }
+    NL
+    ;
+
 statement
-    : NL | st_attr | st_print | st_while | st_if
+    : NL | st_attr | st_print | st_while | st_if | st_call
     ;
 
 st_attr
@@ -216,6 +249,13 @@ st_if
     {
         emit((has_else?"END_ELSE_":"NOT_IF_") + c + ":", 0);
     }
+    ;
+
+st_call
+    : VAR OPEN_P CLOSE_P {
+        emit("\t\tinvokestatic Test/" + $VAR.text + "()V", 0);
+    }
+    NL
     ;
 
 exp_conditional returns [String type]
